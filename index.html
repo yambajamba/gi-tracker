@@ -232,8 +232,6 @@ addEventListener("unhandledrejection",function(ev){show("promise: "+(ev.reason&&
 <noscript><div class="nojs">Scripts are off here. A Files preview can't run this app. Open it from the Home Screen icon or its web address.</div></noscript>
 <div id="nojs" class="nojs">Scripts did not start. A Files preview can't run this app. Open it from the Home Screen icon or its web address.</div>
 <div class="row" style="align-items:center"><h1>GI Tracker</h1><span><input type="color" id="accIn" value="#2f7d5b" title="Accent color" style="width:34px;height:30px;border:0;background:none;padding:0;vertical-align:middle"><button class="link" id="accRst" title="Reset color">↺</button><button class="link" id="mute" title="Sound" style="font-size:18px">🔊</button><button class="link" id="theme" title="Theme" style="font-size:18px">🌗</button></span></div>
-<button class="primary" id="quick" style="margin:0 0 4px">⚡ Quick log</button>
-<div class="hint" id="qhint" style="margin:0 0 14px"></div>
 <div class="card" id="barCard" style="padding:0;overflow:hidden">
 <div class="stage" id="stage" data-mood="idle">
 <svg id="scene" class="idle" viewBox="0 0 360 230" width="100%" role="img" aria-label="Wisconsin supper club bar in warm cinematic lighting, with a lit pull tab machine against the wall at the end of the bar" style="display:block">
@@ -577,9 +575,6 @@ const _rc2=renderChips;renderChips=function(){_rc2();renderExtras()};
 $("medAdd").onclick=()=>{const v=$("medIn").value.trim();if(v&&!meds.includes(v)){meds.push(v);medSel.add(v);sv("gi-meds",meds);$("medIn").value="";renderExtras()}};
 $("addPre").onclick=()=>{const v=$("food").value.trim();if(v&&!presets.includes(v)){presets.push(v);sv("gi-presets",presets);renderExtras()}};
 
-$("quick").onclick=()=>{const l=entries[0];if(!l)return;
-  entries.push({id:"n"+Date.now(),date:today(),time:nowT(),sev:l.sev,symptoms:[...l.symptoms],bristol:null,stress:null,food:"",notes:"",meds:[],ex:null});
-  entries.sort((a,b)=>cmp(b,a));persist();render();$("quick").textContent="Saved ✓";setTimeout(()=>$("quick").textContent="⚡ Quick log",1500)};
 
 function renderCal(){
   const y=calM.getFullYear(),m=calM.getMonth();$("calT").textContent=calM.toLocaleDateString(undefined,{month:"long",year:"numeric"});
@@ -614,8 +609,7 @@ function renderTrend(){
 }
 function renderPatterns(){
   renderCal();renderTod();renderTrend();
-  const l=entries[0];$("qhint").textContent=l?"Copies severity "+l.sev+(l.symptoms.length?" + "+l.symptoms.join(", "):"")+", time = now":"Log one entry first to enable";
-  const m=$("medRow");m.textContent="";
+    const m=$("medRow");m.textContent="";
   for(let i=13;i>=0;i--){const x=new Date();x.setDate(x.getDate()-i);const k=iso(x),n=document.createElement("i");
     if(entries.some(e=>e.date===k&&e.meds&&e.meds.length)){n.textContent="●";n.title="Meds/supplements logged"}m.appendChild(n)}
 }
